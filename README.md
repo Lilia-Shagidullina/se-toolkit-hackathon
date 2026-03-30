@@ -3,18 +3,18 @@
 - [About the lab](#about-the-lab)
 - [Quiz](#quiz)
 - [Hackathon](#hackathon)
-  - [Ideation](#ideation)
-  - [Requirements elicitation](#requirements-elicitation)
-    - [Define stakeholders](#define-stakeholders)
-    - [Write requirements](#write-requirements)
-  - [Planning](#planning)
-  - [Implementation](#implementation)
-    - [Proof of concept](#proof-of-concept)
-    - [Prototype](#prototype)
-    - [Minimal valuable product](#minimal-valuable-product)
-  - [Delivery](#delivery)
-    - [Submit a presentation on `Moodle`](#submit-a-presentation-on-moodle)
-    - [Publish the product code on `GitHub`](#publish-the-product-code-on-github)
+  - [Task 1 — Ideation and Requirements](#task-1--ideation-and-requirements)
+    - [Ideation](#ideation)
+    - [Stakeholders](#stakeholders)
+    - [User stories](#user-stories)
+  - [Task 2 — Proof of Concept](#task-2--proof-of-concept)
+  - [Task 3 — Planning](#task-3--planning)
+    - [Refine the backlog](#refine-the-backlog)
+    - [Scope the MVP](#scope-the-mvp)
+  - [Task 4 — MVP](#task-4--mvp)
+  - [Task 5 — Delivery](#task-5--delivery)
+    - [Submit a presentation on Moodle](#submit-a-presentation-on-moodle)
+    - [Publish the product code on GitHub](#publish-the-product-code-on-github)
 
 ## About the lab
 
@@ -22,17 +22,19 @@ Lab opens with a [quiz](#quiz) and then kicks off the [hackathon](#hackathon).
 
 You must complete both to get the full point for Lab 9.
 
-During the lab:
+During the lab (2 hours):
 
 <!-- no toc -->
 - Write a [quiz](#quiz)
-- Get your [idea](#ideation) and [plan](#planning) approved by the TA
+- Complete [Task 1](#task-1--ideation-and-requirements) — get TA approval
+- Complete [Task 2](#task-2--proof-of-concept) — get TA approval
+
+Use agents and LLMs throughout — for ideation, writing stories, scaffolding code, and prototyping.
 
 By Thursday 23:59, complete:
 
 <!-- no toc -->
-- [Implementation](#implementation)
-- [Delivery](#delivery)
+- [Task 3](#task-3--planning) through [Task 5](#task-5--delivery)
 
 ## Quiz
 
@@ -46,19 +48,23 @@ Pen and paper quiz.
 
 Each student goes from own idea to own deployed product.
 
-Tasks:
-
-<!-- no toc -->
-1. [Ideation](#ideation)
-2. [Planning](#planning)
-3. [Implementation](#implementation)
-4. [Delivery](#delivery)
-
 > [!NOTE]
 >
 > We simplify definitions because you'll study these concepts more in-depth during the SWP course.
 
-### Ideation
+| Task | What | Gate |
+| ---- | ---- | ---- |
+| [Task 1](#task-1--ideation-and-requirements) | Ideation and Requirements — idea, stakeholders, user stories, and what the PoC will test | TA approves during lab |
+| [Task 2](#task-2--proof-of-concept) | Proof of Concept — prove the riskiest technical assumption | TA approves during lab |
+| [Task 3](#task-3--planning) | Planning — refine stories based on PoC learnings, scope the MVP | — |
+| [Task 4](#task-4--mvp) | MVP — fully implement the most important requirements, deploy | — |
+| [Task 5](#task-5--delivery) | Delivery — presentation slides and published code | Moodle + GitHub |
+
+You can't know all user stories before you've built anything. Requirements emerge through building and feedback. Task 1 captures what you can imagine now. Task 2 tests feasibility. Task 3 is where you revise your understanding based on what you learned.
+
+### Task 1 — Ideation and Requirements
+
+#### Ideation
 
 Define:
 
@@ -85,9 +91,7 @@ Each component must:
 - Interact with at least one other component
 - Be necessary for solving the end users' problem
 
-### Requirements elicitation
-
-#### Define stakeholders
+#### Stakeholders
 
 A stakeholder is a person affected by the project.
 
@@ -95,87 +99,85 @@ List all stakeholders of your project (including yourself).
 
 During the hackathon, assume that end users are your main stakeholders and focus on them.
 
-#### Write requirements
-
-A requirement is a testable statement about the project.
-
-Each satisfied requirement makes the product more valuable to particular stakeholders.
-
-Write a list of user stories for the main product features.
+#### User stories
 
 A user story specifies:
 
 1. The persona who wants the feature
 2. What the feature is
 3. Which value the feature brings to the persona
-  
-> 🟪 **Example**
->
-> As a DevOps team member,
->
-> I want the chatbot to answer questions about logs and traces
->
-> so that I can analyze incidents without writing `LogsQL` by hand
 
-Prioritize the user stories focusing on the end users.
-
-### Planning
-
-For each each product version, specify which requirements will be covered in it:
-
-<!-- no toc -->
-1. [Proof of concept](#proof-of-concept)
-2. [Prototype](#prototype)
-3. [Minimal valuable product](#minimal-valuable-product)
-
-### Implementation
-
-#### Proof of concept
-
-Perform the minimal work to prove that your idea is technically feasible.
-
-The sooner you learn what doesn't work, the less work you spend uselessly.
-
-> **Example**
->
-> If you want to develop a Telegram bot, check that the simplest bot works when hosted on the University VM.
-
-#### Prototype
-
-Implement an interactive prototype to learn how the product will look like and feel and which parts can break the user experience.
+Each user story must have acceptance criteria — concrete, testable conditions that define when the story is done.
 
 > 🟪 **Example**
 >
-> If you want to develop a chatbot, add support for main scenarios of end user's interaction with the chatbot.
+> **User story:**
 >
-> E.g., add buttons and minimal logic to handle clicks on these buttons.
+> As a DevOps team member, I want the chatbot to answer questions about logs and traces so that I can analyze incidents without writing `LogsQL` by hand.
 >
-> Use mocks to simplify the implementation.
+> **Acceptance criteria:**
+>
+> - User can type a natural-language question about logs
+> - Chatbot returns relevant log entries within 10 seconds
+> - Chatbot cites which log source it queried
+
+Write user stories for the main product features. Prioritize the ones focusing on end users.
+
+These are your *initial* stories — you will revise them in [Task 3](#task-3--planning) after the PoC.
+
+Discuss with the TA what your PoC should test — the riskiest assumption behind your idea.
+
+**Gate:** TA approves your idea, stakeholders, user stories, and PoC plan before you proceed.
+
+### Task 2 — Proof of Concept
+
+Prove that the riskiest technical assumption behind your idea actually works.
+
+The goal is learning, not building. The sooner you learn what doesn't work, the less effort you waste.
+
+Ask yourself: *what is the one thing that, if it fails, kills the idea?* Build the minimum to test that.
+
+> 🟪 **Example**
+>
+> If your product is a `Telegram` bot deployed on a university VM, the riskiest assumption might be that the bot can receive messages when hosted there. Build the simplest bot, deploy it, and verify.
 
 > [!TIP]
 >
 > Use `Build` in `Google AI Studio`.
 
-> [!IMPORTANT]
-> The prototype shouldn't necessarily use the technologies that will be used in the MVP. For example, you can prototype everything in `TypeScript` but use a real database and `Python` in the MVP.
->
-> It's OK to throw the prototype away and design a better solution where you account for everything you learned.
+**Gate:** Show the PoC to the TA. If it worked, proceed. If it failed, discuss how to pivot.
 
-#### Minimal valuable product
+### Task 3 — Planning
 
-Implement your product, fully covering the most important requirements.
+The PoC likely changed your understanding of what's possible, what's hard, and what matters. This task has two steps: update your backlog, then scope the MVP.
+
+#### Refine the backlog
+
+Based on what you learned in the PoC:
+
+- Add new user stories that emerged
+- Revise or remove stories that turned out to be infeasible or unimportant
+- Update acceptance criteria to reflect what you now know
+
+#### Scope the MVP
+
+Decide which user stories the MVP must cover. Prioritize the ones that deliver the most value to end users.
+
+### Task 4 — MVP
+
+Implement your product, fully covering the most important user stories and their acceptance criteria.
 
 Dockerize all services.
 
 Deploy the product so that it's accessible by course instructors and students from the university network.
 
-### Delivery
+### Task 5 — Delivery
 
 <!-- no toc -->
-1. [Submit a presentation on `Moodle`](#submit-a-presentation-on-moodle)
-2. [Publish the product code on `GitHub`](#publish-the-product-code-on-github)
+1. [Submit a presentation on Moodle](#submit-a-presentation-on-moodle)
+2. [Publish the product code on GitHub](#publish-the-product-code-on-github)
 
-#### Submit a presentation on `Moodle`
+#### Submit a presentation on Moodle
 
 Submit on Moodle a 5-minute presentation with at most ten slides:
 
@@ -204,7 +206,7 @@ Submit on Moodle a 5-minute presentation with at most ten slides:
     - The GitHub repo with the product code
     - Product deployed on a VM
 
-#### Publish the product code on `GitHub`
+#### Publish the product code on GitHub
 
 - Publish the product code in a repository on `GitHub`.
 
@@ -213,13 +215,13 @@ Submit on Moodle a 5-minute presentation with at most ten slides:
 - Add the MIT license file to make your product truly free and open-source.
 
 - Add `README.md` in the product repository.
-  
+
   Recommended structure of the `README.md`:
-  
+
   - Product name
-  
+
   - One-line description
-  
+
   - Demo:
     - A couple of relevant screenshots of the product
 
@@ -228,11 +230,15 @@ Submit on Moodle a 5-minute presentation with at most ten slides:
     - End users
     - Problem that your product solves for end users
     - Your solution
-  
+
+  - Features:
+
+    - Implemented and not not yet implemented features
+
   - Usage:
 
     - Explain how to use your product
-  
+
   - Deployment:
 
     - Which OS the VM should run (you may assume `Ubuntu 24.04` like on your university VMs)
