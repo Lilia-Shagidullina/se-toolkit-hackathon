@@ -1,194 +1,66 @@
 # Lab 9 - Quiz and Hackathon
 
-- [About the lab](#about-the-lab)
-- [Quiz](#quiz)
-- [Hackathon](#hackathon)
-  - [Task 1 — Ideation and Requirements](#task-1--ideation-and-requirements)
-    - [Ideation](#ideation)
-    - [Stakeholders](#stakeholders)
-    - [User stories](#user-stories)
-  - [Task 2 — Proof of Concept](#task-2--proof-of-concept)
-  - [Task 3 — Planning](#task-3--planning)
-    - [Refine the backlog](#refine-the-backlog)
-    - [Scope the MVP](#scope-the-mvp)
-  - [Task 4 — MVP](#task-4--mvp)
-  - [Task 5 — Delivery](#task-5--delivery)
-    - [Submit a presentation on Moodle](#submit-a-presentation-on-moodle)
-    - [Publish the product code on GitHub](#publish-the-product-code-on-github)
-
-## About the lab
-
 Lab opens with a [quiz](#quiz) and then kicks off the [hackathon](#hackathon).
 
-You must complete both to get the full point for Lab 9.
+To get the full point for the lab, you need to get Tasks 1-3 done during the lab. Tasks 4-5 must be finished by the usual deadline of Thursday 23:59.
 
-During the lab (2 hours):
+Use agents and LLMs throughout — for ideation, requirements, scaffolding code, and implementing.
 
-<!-- no toc -->
-- Write a [quiz](#quiz)
-- Complete [Task 1](#task-1--ideation-and-requirements) — get TA approval
-- Complete [Task 2](#task-2--proof-of-concept) — get TA approval
-
-Use agents and LLMs throughout — for ideation, writing stories, scaffolding code, and prototyping.
-
-By Thursday 23:59, complete:
-
-<!-- no toc -->
-- [Task 3](#task-3--planning) through [Task 5](#task-5--delivery)
-
-## Quiz
-
+**Task 1 (graded by TA after the lab).**
 Pen and paper quiz.
+- closed book, no devices allowed.
+- you get random 3 questions from the question bank.
+- answer at least 2 out of 3 correctly.
 
-- Closed-book, no devices allowed.
-- You get random 3 questions from the question bank (available on Moodle).
-- Answer at least 2 out of 3 correctly.
-
-## Hackathon
-
-Each student goes from own idea to own deployed product.
-
-> [!NOTE]
->
-> We simplify definitions because you'll study these concepts more in-depth during the SWP course.
-
-| Task | What | Gate |
-| ---- | ---- | ---- |
-| [Task 1](#task-1--ideation-and-requirements) | Ideation and Requirements — idea, stakeholders, user stories, and what the PoC will test | TA approves during lab |
-| [Task 2](#task-2--proof-of-concept) | Proof of Concept — prove the riskiest technical assumption | TA approves during lab |
-| [Task 3](#task-3--planning) | Planning — refine stories based on PoC learnings, scope the MVP | — |
-| [Task 4](#task-4--mvp) | MVP — fully implement the most important requirements, deploy | — |
-| [Task 5](#task-5--delivery) | Delivery — presentation slides and published code | Moodle + GitHub |
-
-You can't know all user stories before you've built anything. Requirements emerge through building and feedback. Task 1 captures what you can imagine now. Task 2 tests feasibility. Task 3 is where you revise your understanding based on what you learned.
-
-### Task 1 — Ideation and Requirements
-
-#### Ideation
+**Task 2 (approved by TA during the lab).**
+The project idea must:
+- Be something simple to build, clearly useful, and easy to explain;
+- Involve backend + db + web dashboard + user-facing agent;
+- Not be an LMS (different from the course project).
 
 Define:
-
 - End users of the product
 - Which problem your product solves for the end users
-- The product idea
+- The product idea in one short sentence
 
-The product idea must be:
-
-- Easy to explain in one sentence
-- Easy to implement using an agent
-- Clearly solve the problem for end users
-- Different from the project used in SET labs
-
-The product must have at least these components:
-
+The product must have these components each fulfilling a useful function:
 - The nanobot agent
 - Frontend
 - Backend
 - Database
 
-Each component must:
+> 🟪 **Note**
+> `Telegram` bots deployed on a university VM can fail to receive messages when hosted there.
 
-- Interact with at least one other component
-- Be necessary for solving the end users' problem
+**Task 3 (approved by TA during the lab).**
+Produce a plan including:
+- prioritized requirements;
+- a clear breakdown of requirements into three product phases.
 
-#### Stakeholders
+Give priority to features that deliver the most value to end users and are easier to implement. Each phase should be a functioning product in itself.
 
-A stakeholder is a person affected by the project.
+**Task 4.**
+- Implement your product with the core features.
+- Publish all code as a repo on github.
+- Dockerize all services.
+- Deploy it to be accessible to use.
 
-List all stakeholders of your project (including yourself).
+**Task 5.**
+Submit presentation with five slides:
+- Product title, your name, email, group
+- The problem you are solving and your end-user
+- How you built it
+- Video demo with live commentaries (<2 mins)
+- Links to try.
 
-During the hackathon, assume that end users are your main stakeholders and focus on them.
 
-#### User stories
-
-A user story specifies:
-
-1. The persona who wants the feature
-2. What the feature is
-3. Which value the feature brings to the persona
-
-Each user story must have acceptance criteria — concrete, testable conditions that define when the story is done.
-
-> 🟪 **Example**
->
-> **User story:**
->
-> As a DevOps team member, I want the chatbot to answer questions about logs and traces so that I can analyze incidents without writing `LogsQL` by hand.
->
-> **Acceptance criteria:**
->
-> - User can type a natural-language question about logs
-> - Chatbot returns relevant log entries within 10 seconds
-> - Chatbot cites which log source it queried
-
-Write user stories for the main product features. Prioritize the ones focusing on end users.
-
-These are your *initial* stories — you will revise them in [Task 3](#task-3--planning) after the PoC.
-
-Discuss with the TA what your PoC should test — the riskiest assumption behind your idea.
-
-**Gate:** TA approves your idea, stakeholders, user stories, and PoC plan before you proceed.
-
-### Task 2 — Proof of Concept
-
-Prove that the riskiest technical assumption behind your idea actually works.
-
-The goal is learning, not building. The sooner you learn what doesn't work, the less effort you waste.
-
-Ask yourself: *what is the one thing that, if it fails, kills the idea?* Build the minimum to test that.
-
-> 🟪 **Example**
->
-> If your product is a `Telegram` bot deployed on a university VM, the riskiest assumption might be that the bot can receive messages when hosted there. Build the simplest bot, deploy it, and verify.
-
-> [!TIP]
->
-> Use `Build` in `Google AI Studio`.
-
-**Gate:** Show the PoC to the TA. If it worked, proceed. If it failed, discuss how to pivot.
-
-### Task 3 — Planning
-
-The PoC likely changed your understanding of what's possible, what's hard, and what matters. This task has two steps: update your backlog, then scope the MVP.
-
-#### Refine the backlog
-
-Based on what you learned in the PoC:
-
-- Add new user stories that emerged
-- Revise or remove stories that turned out to be infeasible or unimportant
-- Update acceptance criteria to reflect what you now know
-
-#### Scope the MVP
-
-Decide which user stories the MVP must cover. Prioritize the ones that deliver the most value to end users.
-
-### Task 4 — MVP
-
-Implement your product, fully covering the most important user stories and their acceptance criteria.
-
-Dockerize all services.
-
-Deploy the product so that it's accessible by course instructors and students from the university network.
-
-### Task 5 — Delivery
-
-<!-- no toc -->
-1. [Submit a presentation on Moodle](#submit-a-presentation-on-moodle)
-2. [Publish the product code on GitHub](#publish-the-product-code-on-github)
-
-#### Submit a presentation on Moodle
-
-Submit on Moodle a 5-minute presentation with at most ten slides:
+Submit on Moodle a 5-minute presentation with five slides:
 
 - Title slide:
   - Product title
   - Your name
   - Your university email
   - Your group
-
-- Agenda slide:
-  - List of sections in the presentation
 
 - Context slide(s):
   - Your end users
@@ -200,25 +72,28 @@ Submit on Moodle a 5-minute presentation with at most ten slides:
 
 - Demo slide(s):
   - Pre-recorded demo with live commentaries (no longer than 2 minutes)
+  - _Note:_ This is the most important part of the presentation.
 
 - Final slide:
   - Link and QR code for each of these:
     - The GitHub repo with the product code
-    - Product deployed on a VM
+    - Deployed product
 
-#### Publish the product code on GitHub
+
+
+#### Publishing the product code on GitHub
 
 - Publish the product code in a repository on `GitHub`.
 
-  The repository name must be `se-toolkit-<product-name>` (without `<` and `>`).
+  The repository name must be called `se-toolkit-hackathon`.
 
-- Add the MIT license file to make your product truly free and open-source.
+- Add the MIT license file to make your product open-source.
 
 - Add `README.md` in the product repository.
 
-  Recommended structure of the `README.md`:
+  `README.md` structure:
 
-  - Product name
+  - Product name (as title)
 
   - One-line description
 
