@@ -22,177 +22,60 @@ Bot solve the problem of getting a joke that might not fit to user and of wastin
 
 ### Our Solution
 
-Joke Bot Web solves this by providing a **mood-based joke discovery platform** with a community-driven rating system:
-
-1. **Mood Selection** — Users choose from 5 mood categories (Happy, Sad, Scary, Angry, Mysterious) to get jokes that match their current emotional state
-2. **Weighted Random Selection** — Better-rated jokes appear more frequently, ensuring quality content surfaces to the top
-3. **Simple Rating System** — Like/dislike buttons let users provide feedback instantly
-4. **Responsive Web UI** — Works on desktop and mobile with a clean Bootstrap 5 interface
-5. **RESTful API** — Full OpenAPI documentation for easy integration
+Joke Bot Web lets users pick one of seven mood categories and returns a random joke weighted by its rating. Users can rate jokes with 👍/👎, stored in PostgreSQL. Available at http://10.93.25.232:5000 with Swagger API docs (`/docs`).
 
 ## Features
 
-### Implemented
-
-- ✅ 5 mood categories: Happy, Sad, Scary, Angry, Mysterious
-- ✅ Weighted random joke selection (higher-rated jokes appear more often)
-- ✅ Like/Dislike rating system with PostgreSQL storage
-- ✅ Responsive Bootstrap 5 UI
-- ✅ REST API with OpenAPI/Swagger documentation (`/docs`)
-- ✅ Docker deployment (FastAPI + PostgreSQL + Nginx + pgAdmin)
-- ✅ Telegram Bot integration (`bot.py`)
-- ✅ Database seeding from `jokes.json` on startup
-- ✅ Proxy architecture (Nginx → FastAPI backend)
-
-### Not Yet Implemented
-
-- 🔲 "Another joke" button to get a new joke in the same category without returning to menu
-- 🔲 User joke submission feature
-- 🔲 User accounts and personal joke history
-- 🔲 Advanced filtering and search
-- 🔲 Social sharing of jokes
-- 🔲 Admin panel for joke moderation
+1. **Database of jokes** — persistent storage with seeding from `jokes.json`
+2. **Different emotions** — 7 mood categories: Happy, Sad, Scary, Angry, Mysterious, Disgusting, Bored
+3. **Rating of jokes** — Like/Dislike system with one-vote-per-IP protection
+4. **"Another one" button** — get a new joke in the same category without returning to the menu
+5. **The ability to offer jokes** — user submission with moderation queue (approve/reject)
 
 ## Usage
 
-### Web Application
-
-Access the web client at **http://10.93.25.232:5000**:
-
-1. Click on a mood category button
-2. Read the joke displayed
-3. Rate the joke with 👍 or 👎
-4. Choose another mood to continue
-
-### API Endpoints
-
-The backend provides a REST API with full Swagger documentation at **http://10.93.25.232:5000/docs**:
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/api/categories` | List available mood categories |
-| `GET` | `/api/joke/{category}` | Get a random joke from a category |
-| `POST` | `/api/rate` | Rate a joke (body: `{"joke_id": N, "is_like": true}`) |
-
-### Telegram Bot
-
-Run the Telegram bot to get jokes directly in Telegram:
-
-```bash
-python bot.py
-```
-
-Available commands:
-- `/start` — Show mood selection buttons
-- `/help` — Show usage instructions
-- `/Happy`, `/Sad`, `/Scary`, `/Angry`, `/Mysterious` — Get a joke in specific category
+- **Web app** — http://10.93.25.232:5000 — pick a mood, read the joke, rate it 👍/👎, or get another one
+- **API** — http://10.93.25.232:5000/docs — `GET /api/categories`, `GET /api/joke/{category}`, `POST /api/rate`, plus submission and moderation endpoints
+- **Telegram bot** — run `python bot.py`, then `/start` to browse moods or `/Happy`, `/Sad`, etc. to get a joke directly
 
 ## Deployment
 
-### Target OS
+### Live Server
 
-- **Ubuntu 24.04** (recommended, same as university VMs)
+The app is already running at **http://10.93.25.232:5000**.
 
-### Prerequisites
-
-The following should be installed on the VM:
-
-```bash
-# Update package list
-sudo apt update
-
-# Install Docker
-sudo apt install -y docker.io docker-compose-v2
-
-# Start and enable Docker
-sudo systemctl enable --now docker
-
-# Add current user to docker group (optional, to run without sudo)
-sudo usermod -aG docker $USER
-```
-
-### Step-by-Step Deployment
-
-**1. Clone the repository:**
+### Deploy from Scratch
 
 ```bash
 git clone https://github.com/Lilia-Shagidullina/se-toolkit-hackathon.git
 cd se-toolkit-hackathon
-```
-
-**2. Configure environment:**
-
-```bash
 cp .env.docker.example .env
-```
-
-Edit `.env` if you need to customize database credentials or ports.
-
-**3. Build and start services:**
-
-```bash
 docker compose up -d --build
 ```
 
-**4. Verify deployment:**
-
-```bash
-# Check all containers are running
-docker compose ps
-
-# Check web client is accessible
-curl http://10.93.25.232:5000/
-
-# Check API is working
-curl http://10.93.25.232:5000/api/categories
-
-# Get a joke
-curl http://10.93.25.232:5000/api/joke/Happy
-```
-
-### Access Points
-
-| Service | Port | URL |
-|---------|------|-----|
-| **Web Client** | 5000 | http://10.93.25.232:5000 |
-| Backend API | 5000 | http://10.93.25.232:5000/docs |
-
 ### Docker Compose Services
 
-| Service | Image | Description |
-|---------|-------|-------------|
-| **client** | nginx:alpine | Bootstrap 5 frontend, serves web UI on port 5000 |
-| **backend** | Custom (FastAPI) | Joke API with rating system |
-| **db** | postgres:16-alpine | PostgreSQL database for persistent storage |
+| Service | Description |
+|---------|-------------|
+| **backend** | FastAPI — joke API + rating |
+| **db** | PostgreSQL 16 — persistent storage |
+| **frontend** | Flask — web UI (port 5000) |
+| **client** | Nginx — proxy frontend (port 42019) |
+
+### Verify
+
+```bash
+docker compose ps
+curl http://10.93.25.232:5000/api/categories
+curl http://10.93.25.232:5000/api/joke/Happy
+```
 
 ### Architecture
 
 ```
-┌─────────────┐
-│   Browser   │  →  http://10.93.25.232:5000
-└──────┬──────┘
-       │
-       ▼
-┌──────────────────┐
-│   client (Nginx) │  :5000
-│  ┌────────────┐  │
-│  │ index.html │  │  Bootstrap 5 SPA
-│  └────────────┘  │
-└──────┬───────────┘
-       │ /api/*
-       ▼
-┌───────────────────────────────┐
-│  jokes-backend (FastAPI)      │  :8000
-│  GET  /api/categories         │
-│  GET  /api/joke/{category}    │
-│  POST /api/rate               │
-└──────┬────────────────────────┘
-       │
-       ▼
-┌──────────────────┐
-│   PostgreSQL 16  │  :5432
-│  jokes table     │
-└──────────────────┘
+Browser → Flask frontend (:5000)
+           ├── FastAPI backend (:8000) → PostgreSQL (:5432)
+           └── Nginx client proxy (:42019)
 ```
 
 ## Project Structure
