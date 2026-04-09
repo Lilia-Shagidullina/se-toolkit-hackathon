@@ -1,170 +1,253 @@
-# Lab 9 - Quiz and Hackathon
+# Joke Bot Web
 
-The lab opens with a quiz and then kicks off the hackathon.
+Web-based joke bot with mood-based selection and rating system — choose your mood, get a joke, rate it!
 
-To get the full point for the lab, you need to:
+## Demo
 
-- Pass Tasks 1, 2, 3 during the lab AND
-- Finish Tasks 4 and 5 by the usual deadline of Thursday 23:59.
+![Joke Bot Web UI](https://via.placeholder.com/800x500/667eea/ffffff?text=Joke+Bot+-+Choose+Your+Mood)
 
-Each student builds their own project:
+*Main interface with mood selection buttons*
 
-- Go from an idea to a deployed product.
-- Use agents and LLMs throughout.
+![Joke Bot Rating](https://via.placeholder.com/800x500/764ba2/ffffff?text=Joke+Bot+-+Rate+a+Joke)
 
-----
+*Joke display with like/dislike rating system*
 
-## Task 1 (graded by TA after the lab)
+> **Note:** Replace placeholder screenshots with actual screenshots of your deployed application. To capture screenshots:
+> 1. Deploy the application (see Deployment section below)
+> 2. Open http://localhost:42019 in your browser
+> 3. Take screenshots of the mood selection page and a joke display
+> 4. Save them to a `screenshots/` folder and update the image links above
 
-Pen and paper quiz:
+## Product Context
 
-- 20 mins;
-- closed book, no devices;
-- you get 3 random questions from the question bank;
-- answer at least 2.
+### End Users
 
-## Task 2 (approved by TA during the lab)
+- Anyone looking for a quick laugh or mood boost
+- Users who enjoy humor categorized by emotional state
+- People who want to discover jokes matching their current mood
+- Users interested in rating and curating joke content
 
-Ideate and plan your project.
+### Problem
 
-### Project idea
+Traditional joke websites show random jokes without any personalization or feedback mechanism. Users have no control over the type of humor they receive, and there's no way to indicate which jokes they found funny. This leads to a frustrating experience where users see irrelevant or unfunny content with no improvement over time.
 
-The project idea must be:
+### Our Solution
 
-- something simple to build;
-- clearly useful;
-- easy to explain.
+Joke Bot Web solves this by providing a **mood-based joke discovery platform** with a community-driven rating system:
 
-Define and show to your TA:
+1. **Mood Selection** — Users choose from 5 mood categories (Happy, Sad, Scary, Angry, Mysterious) to get jokes that match their current emotional state
+2. **Weighted Random Selection** — Better-rated jokes appear more frequently, ensuring quality content surfaces to the top
+3. **Simple Rating System** — Like/dislike buttons let users provide feedback instantly
+4. **Responsive Web UI** — Works on desktop and mobile with a clean Bootstrap 5 interface
+5. **RESTful API** — Full OpenAPI documentation for easy integration
 
-- End-user of the product
-- What problem your product solves for the end-user?
-- The product idea in one short sentence.
-- What is the product's core feature?
+## Features
 
-### Implementation plan
+### Implemented
 
-When the idea is approved, produce a plan for two product versions.
+- ✅ 5 mood categories: Happy, Sad, Scary, Angry, Mysterious
+- ✅ Weighted random joke selection (higher-rated jokes appear more often)
+- ✅ Like/Dislike rating system with PostgreSQL storage
+- ✅ Responsive Bootstrap 5 UI
+- ✅ REST API with OpenAPI/Swagger documentation (`/docs`)
+- ✅ Docker deployment (FastAPI + PostgreSQL + Nginx + pgAdmin)
+- ✅ Telegram Bot integration (`bot.py`)
+- ✅ Database seeding from `jokes.json` on startup
+- ✅ Proxy architecture (Nginx → FastAPI backend)
 
-Version 1 does one core thing well:
+### Not Yet Implemented
 
-- Pick the one feature most valuable to the end-user and relatively easy to implement;
-- It is a functioning product, not a prototype;
-- Must be shown to the TA upon completion for feedback.
+- 🔲 "Another joke" button to get a new joke in the same category without returning to menu
+- 🔲 User joke submission feature
+- 🔲 User accounts and personal joke history
+- 🔲 Advanced filtering and search
+- 🔲 Social sharing of jokes
+- 🔲 Admin panel for joke moderation
 
-Version 2 builds upon Version 1:
+## Usage
 
-- Improves the initial feature or adds another one on top;
-- Address TA feedback from the lab;
-- Deploy and make it available for use.
+### Web Application
 
-The product must have the following components, each fulfilling a useful function:
+Access the web client at **http://localhost:42019** after deployment:
 
-- backend;
-- database;
-- end-user-facing client: web app, mobile app, or LLM-powered agent, e.g. `nanobot`.
+1. Click on a mood category button
+2. Read the joke displayed
+3. Rate the joke with 👍 or 👎
+4. Choose another mood to continue
 
-Note:
+### API Endpoints
 
-- You can use the setup from Lab 8 or start from scratch.
-- `Telegram` bots are blocked on university VMs.
+The backend provides a REST API with full Swagger documentation at **http://localhost:8000/docs**:
 
-## Task 3 (approved by TA during the lab)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/categories` | List available mood categories |
+| `GET` | `/api/joke/{category}` | Get a random joke from a category |
+| `POST` | `/api/rate` | Rate a joke (body: `{"joke_id": N, "is_like": true}`) |
 
-Implement Version 1 outlined in the plan:
+### Telegram Bot
 
-- Build one core feature;
-- Follow best practices and git workflow;
-- Test it yourself and fix bugs;
-- Have the TA try it as a user;
-- Take note of the TA feedback;
-- Get TA's approval for the task to be marked as DONE.
+Run the Telegram bot to get jokes directly in Telegram:
 
-## Task 4
+```bash
+python bot.py
+```
 
-Implement and deploy Version 2 outlined in the plan:
+Available commands:
+- `/start` — Show mood selection buttons
+- `/help` — Show usage instructions
+- `/Happy`, `/Sad`, `/Scary`, `/Angry`, `/Mysterious` — Get a joke in specific category
 
-- Build and polish functionality;
-- Take TA feedback into account;
-- Push all code to the GitHub repo (see the detailed instructions below);
-- Follow best practices and git workflow;
-- Document your solution;
-- Dockerize all services;
-- Deploy it to be accessible to use.
+## Deployment
 
-Version 2 can be completed during the lab or after it, before the usual deadline.
+### Target OS
 
-## Task 5 (demo and PDF submitted through Moodle)
+- **Ubuntu 24.04** (recommended, same as university VMs)
 
-Submit a presentation with five slides:
+### Prerequisites
 
-1. Title:
+The following should be installed on the VM:
 
-   - Product title
-   - Your name
-   - Your university email
-   - Your group
+```bash
+# Update package list
+sudo apt update
 
-2. Context:
+# Install Docker
+sudo apt install -y docker.io docker-compose-v2
 
-   - End-user of the product
-   - What problem your product solves
-   - The product idea in one short sentence
+# Start and enable Docker
+sudo systemctl enable --now docker
 
-3. Implementation:
+# Add current user to docker group (optional, to run without sudo)
+sudo usermod -aG docker $USER
+```
 
-   - How you built the product
-   - What went into Version 1 and Version 2
-   - What TA feedback points you addressed
+### Step-by-Step Deployment
 
-4. Demo:
+**1. Clone the repository:**
 
-   - Pre-recorded video demonstration of Version 2 with voice-over (no longer than 2 minutes).
-   - _Note:_ **This is the most important part of the presentation**.
+```bash
+git clone https://github.com/Lilia-Shagidullina/se-toolkit-hackathon.git
+cd se-toolkit-hackathon
+```
 
-5. Links:
+**2. Configure environment:**
 
-   - Link and QR code for each of these:
-     - The GitHub repo with the product code
-     - Deployed product (latest version)
+```bash
+cp .env.docker.example .env
+```
 
-----
+Edit `.env` if you need to customize database credentials or ports.
 
-## Publishing the product code on GitHub
+**3. Build and start services:**
 
-- Publish the product code in a repository on `GitHub`.
+```bash
+docker compose up -d --build
+```
 
-  The repository must be called `se-toolkit-hackathon`.
+**4. Verify deployment:**
 
-- Add the MIT license file to make your product open-source.
+```bash
+# Check all containers are running
+docker compose ps
 
-- Add `README.md` in the product repository.
+# Check web client is accessible
+curl http://localhost:42019/
 
-  `README.md` structure:
+# Check API is working
+curl http://localhost:42019/api/categories
 
-  - Product name (as title)
+# Get a joke
+curl http://localhost:42019/api/joke/Happy
+```
 
-  - One-line description
+### Access Points
 
-  - Demo:
-    - A couple of relevant screenshots of the product
+| Service | Port | URL |
+|---------|------|-----|
+| **Web Client** | 42019 | http://your-server-ip:42019 |
+| Backend API | 8000 | http://your-server-ip:8000 |
+| API Documentation | 8000 | http://your-server-ip:8000/docs |
+| pgAdmin | 5050 | http://your-server-ip:5050 |
 
-  - Product context:
+### Docker Compose Services
 
-    - End users
-    - Problem that your product solves for end users
-    - Your solution
+| Service | Image | Description |
+|---------|-------|-------------|
+| **client** | nginx:alpine | Bootstrap 5 frontend, serves web UI on port 42019 |
+| **backend** | Custom (FastAPI) | Joke API with rating system |
+| **db** | postgres:16-alpine | PostgreSQL database for persistent storage |
+| **frontend** | Custom (Nginx) | Alternative frontend on port 8000 |
 
-  - Features:
+### Architecture
 
-    - Implemented and not yet implemented features
+```
+┌─────────────┐
+│   Browser   │  →  http://vm:42019
+└──────┬──────┘
+       │
+       ▼
+┌──────────────────┐
+│   client (Nginx) │  :42019
+│  ┌────────────┐  │
+│  │ index.html │  │  Bootstrap 5 SPA
+│  └────────────┘  │
+└──────┬───────────┘
+       │ /api/*
+       ▼
+┌───────────────────────────────┐
+│  jokes-backend (FastAPI)      │  :8000
+│  GET  /api/categories         │
+│  GET  /api/joke/{category}    │
+│  POST /api/rate               │
+└──────┬────────────────────────┘
+       │
+       ▼
+┌──────────────────┐
+│   PostgreSQL 16  │  :5432
+│  jokes table     │
+└──────────────────┘
+```
 
-  - Usage:
+## Project Structure
 
-    - Explain how to use your product
+```
+se-toolkit-hackathon/
+├── client/
+│   ├── index.html       # Bootstrap 5 frontend (SPA)
+│   ├── nginx.conf       # Nginx: static + /api/* → backend:8000
+│   └── Dockerfile       # nginx:alpine
+├── src/app/             # FastAPI backend
+│   ├── main.py
+│   ├── jokes.py         # Business logic + SQLAlchemy models
+│   ├── settings.py
+│   └── routers/jokes.py # API endpoints
+├── bot.py               # Telegram Bot integration
+├── jokes.json           # Initial joke data (seeded into DB on startup)
+├── docker-compose.yml   # client + backend + postgres + pgadmin
+├── Dockerfile           # Backend multi-stage build
+├── pyproject.toml       # Python dependencies (FastAPI, SQLAlchemy, etc.)
+└── requirements.txt     # Pip requirements
+```
 
-  - Deployment:
+## Local Development
 
-    - Which OS the VM should run on (you may assume `Ubuntu 24.04` like on your university VMs)
-    - What should be installed on the VM
-    - Step-by-step deployment instructions
+### Backend
+
+```bash
+# Install dependencies with uv
+uv sync
+
+# Run development server with auto-reload
+uv run poe dev
+```
+
+Open http://localhost:8000/docs for Swagger UI.
+
+### Web Client
+
+The web client is a single-page application served via Nginx. Edit `client/index.html` to modify the UI.
+
+## License
+
+MIT License — see [LICENSE](LICENSE) file for details.
