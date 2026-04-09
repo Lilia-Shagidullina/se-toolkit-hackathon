@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke Bot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 Joke Bot</h1>
+            <p class="subtitle">Choose your mood and get a joke!</p>
+        </header>
+
+        <main>
+            <!-- Categories Menu -->
+            <div id="categories-screen" class="screen">
+                <h2>Choose your mood:</h2>
+                <div id="categories" class="categories-grid">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Joke Display Screen -->
+            <div id="joke-screen" class="screen hidden">
+                <div class="joke-card">
+                    <div class="joke-header">
+                        <span id="joke-category" class="category-badge"></span>
+                        <button id="back-btn" class="btn-secondary">← Back</button>
+                    </div>
+                    <p id="joke-text" class="joke-text"></p>
+                    <div class="joke-stats">
+                        <span id="joke-rating" class="rating">⭐ 0</span>
+                        <span id="joke-votes" class="votes">(0 votes)</span>
+                    </div>
+                    <div class="rating-buttons">
+                        <button id="like-btn" class="btn-like">👍 Like</button>
+                        <button id="dislike-btn" class="btn-dislike">👎 Dislike</button>
+                    </div>
+                    <p id="rating-message" class="rating-message hidden"></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Rate jokes to improve the collection! 👍 👎</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

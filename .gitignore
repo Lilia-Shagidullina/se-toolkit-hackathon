@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+!.env.example
+!.env.docker.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+caddy_data/
+caddy_config/
+
+# Logs
+*.log
+new_venv/  
+__pycache__/  
+*.pyc  

@@ -1,0 +1,27 @@
+[project]
+name = "joke-bot-web"
+version = "0.1.0"
+description = "Web-based joke bot with rating system"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.128.7",
+    "uvicorn[standard]==0.40.0",
+    "pydantic==2.12.5",
+    "pydantic-settings==2.12.0",
+    "sqlalchemy==2.0.45",
+    "psycopg2-binary==2.9.11",
+]
+
+[dependency-groups]
+dev = [
+    "poethepoet",
+    "pyright",
+    "pytest",
+    "ruff",
+]
+
+[tool.poe.tasks]
+dev = "uv run uvicorn src.app.run:app --reload --host 0.0.0.0 --port 8000"
+start = "uv run python src/app/run.py"
+lint = "uv run ruff check src/"
+typecheck = "uv run pyright src/"

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit a Joke - Joke Bot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2d3436;
+        }
+
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 14px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            color: #f5576c !important;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .navbar-subtitle {
+            color: #636e72;
+            font-size: 0.85rem;
+        }
+
+        .main-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px 16px;
+        }
+
+        .submit-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 36px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+        .submit-card h2 {
+            color: #2d3436;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+        .submit-card .subtitle {
+            color: #636e72;
+            margin-bottom: 24px;
+        }
+
+        .submit-form textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #dfe6e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 150px;
+            margin-bottom: 16px;
+        }
+        .submit-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .submit-form select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #dfe6e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            background: #fff;
+        }
+        .submit-form select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        .btn-submit:hover {
+            filter: brightness(1.1);
+        }
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .feedback-area {
+            padding: 14px 18px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .feedback-area.success {
+            background: #00b894;
+            color: #fff;
+            display: block;
+        }
+        .feedback-area.error {
+            background: #d63031;
+            color: #fff;
+            display: block;
+        }
+
+        .btn-back-home {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn-back-home:hover {
+            filter: brightness(1.1);
+            color: #fff;
+        }
+
+        .site-footer {
+            text-align: center;
+            padding: 20px 0 32px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="container">
+            <div style="max-width:900px; margin:0 auto; width:100%;">
+                <div>
+                    <a href="/" class="navbar-brand">Joke Bot</a>
+                    <div class="navbar-subtitle">Submit a joke</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="submit-card">
+            <h2>Share Your Joke</h2>
+            <p class="subtitle">Have a funny joke? Add it to our collection!</p>
+
+            <form id="submit-form" class="submit-form">
+                <textarea id="submit-text" placeholder="Type your joke here..." required></textarea>
+                <select id="submit-category" required>
+                    <option value="" disabled selected>Select a mood</option>
+                    <option value="Happy">Happy</option>
+                    <option value="Sad">Sad</option>
+                    <option value="Scary">Scary</option>
+                    <option value="Angry">Angry</option>
+                    <option value="Mysterious">Mysterious</option>
+                </select>
+                <button type="submit" id="btn-submit-joke" class="btn-submit">Submit Joke</button>
+            </form>
+            <div id="submit-feedback" class="feedback-area"></div>
+
+            <a href="/" class="btn-back-home">Back to Jokes</a>
+        </div>
+    </div>
+
+    <div class="site-footer">
+        Joke Bot — Choose a mood, then get a joke
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        const submitForm = document.getElementById('submit-form');
+        const submitText = document.getElementById('submit-text');
+        const submitCategory = document.getElementById('submit-category');
+        const btnSubmitJoke = document.getElementById('btn-submit-joke');
+        const submitFeedback = document.getElementById('submit-feedback');
+
+        function showFeedback(msg, type) {
+            submitFeedback.textContent = msg;
+            submitFeedback.className = 'feedback-area ' + type;
+        }
+        function hideFeedback() {
+            submitFeedback.className = 'feedback-area';
+        }
+
+        submitForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = submitText.value.trim();
+            const category = submitCategory.value;
+
+            if (!text || !category) return;
+
+            btnSubmitJoke.disabled = true;
+            hideFeedback();
+
+            try {
+                const res = await fetch(`${API_URL}/submit_joke`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, category })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    showFeedback('Joke submitted! Thank you.', 'success');
+                    submitText.value = '';
+                    submitCategory.value = '';
+                    setTimeout(hideFeedback, 3000);
+                } else {
+                    showFeedback(`❌ ${data.error || 'Failed to submit'}`, 'error');
+                }
+            } catch (err) {
+                showFeedback('❌ Network error', 'error');
+            } finally {
+                btnSubmitJoke.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

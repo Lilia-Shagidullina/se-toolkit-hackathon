@@ -1,0 +1,10 @@
+:80 {
+    reverse_proxy /api* app:8000
+    reverse_proxy /docs* app:8000
+    reverse_proxy /openapi.json app:8000
+
+    handle /* {
+        root * http://app:8000
+        file_server
+    }
+}
