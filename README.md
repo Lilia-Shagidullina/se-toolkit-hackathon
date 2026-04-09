@@ -36,7 +36,6 @@ Joke Bot Web lets users pick one of seven mood categories and returns a random j
 
 - **Web app** — http://10.93.25.232:5000 — pick a mood, read the joke, rate it 👍/👎, or get another one
 - **API** — http://10.93.25.232:5000/docs — `GET /api/categories`, `GET /api/joke/{category}`, `POST /api/rate`, plus submission and moderation endpoints
-- **Telegram bot** — run `python bot.py`, then `/start` to browse moods or `/Happy`, `/Sad`, etc. to get a joke directly
 
 ## Deployment
 
@@ -91,7 +90,6 @@ se-toolkit-hackathon/
 │   ├── jokes.py         # Business logic + SQLAlchemy models
 │   ├── settings.py
 │   └── routers/jokes.py # API endpoints
-├── bot.py               # Telegram Bot integration
 ├── jokes.json           # Initial joke data (seeded into DB on startup)
 ├── docker-compose.yml   # client + backend + postgres + pgadmin
 ├── Dockerfile           # Backend multi-stage build
