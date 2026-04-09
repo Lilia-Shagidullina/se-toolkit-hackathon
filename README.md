@@ -4,32 +4,21 @@ Web-based joke bot with mood-based selection and rating system — choose your m
 
 ## Demo
 
-![Joke Bot Web UI](https://via.placeholder.com/800x500/667eea/ffffff?text=Joke+Bot+-+Choose+Your+Mood)
+![Joke Bot Title](screenshots/jokeBotTitle.png)
 
-*Main interface with mood selection buttons*
+![Joke Bot Joke](screenshots/JokeBotJoke.png)
 
-![Joke Bot Rating](https://via.placeholder.com/800x500/764ba2/ffffff?text=Joke+Bot+-+Rate+a+Joke)
-
-*Joke display with like/dislike rating system*
-
-> **Note:** Replace placeholder screenshots with actual screenshots of your deployed application. To capture screenshots:
-> 1. Deploy the application (see Deployment section below)
-> 2. Open http://localhost:42019 in your browser
-> 3. Take screenshots of the mood selection page and a joke display
-> 4. Save them to a `screenshots/` folder and update the image links above
+![Joke Bot Submit](screenshots/JokeBotSubmit.png)
 
 ## Product Context
 
 ### End Users
 
-- Anyone looking for a quick laugh or mood boost
-- Users who enjoy humor categorized by emotional state
-- People who want to discover jokes matching their current mood
-- Users interested in rating and curating joke content
+- People who want to cheer up himself and search a joke
 
 ### Problem
 
-Traditional joke websites show random jokes without any personalization or feedback mechanism. Users have no control over the type of humor they receive, and there's no way to indicate which jokes they found funny. This leads to a frustrating experience where users see irrelevant or unfunny content with no improvement over time.
+Bot solve the problem of getting a joke that might not fit to user and of wasting time of searching joke
 
 ### Our Solution
 
