@@ -57,7 +57,7 @@ Joke Bot Web solves this by providing a **mood-based joke discovery platform** w
 
 ### Web Application
 
-Access the web client at **http://localhost:42019** after deployment:
+Access the web client at **http://10.93.25.232:5000**:
 
 1. Click on a mood category button
 2. Read the joke displayed
@@ -66,7 +66,7 @@ Access the web client at **http://localhost:42019** after deployment:
 
 ### API Endpoints
 
-The backend provides a REST API with full Swagger documentation at **http://localhost:8000/docs**:
+The backend provides a REST API with full Swagger documentation at **http://10.93.25.232:5000/docs**:
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -141,43 +141,40 @@ docker compose up -d --build
 docker compose ps
 
 # Check web client is accessible
-curl http://localhost:42019/
+curl http://10.93.25.232:5000/
 
 # Check API is working
-curl http://localhost:42019/api/categories
+curl http://10.93.25.232:5000/api/categories
 
 # Get a joke
-curl http://localhost:42019/api/joke/Happy
+curl http://10.93.25.232:5000/api/joke/Happy
 ```
 
 ### Access Points
 
 | Service | Port | URL |
 |---------|------|-----|
-| **Web Client** | 42019 | http://your-server-ip:42019 |
-| Backend API | 8000 | http://your-server-ip:8000 |
-| API Documentation | 8000 | http://your-server-ip:8000/docs |
-| pgAdmin | 5050 | http://your-server-ip:5050 |
+| **Web Client** | 5000 | http://10.93.25.232:5000 |
+| Backend API | 5000 | http://10.93.25.232:5000/docs |
 
 ### Docker Compose Services
 
 | Service | Image | Description |
 |---------|-------|-------------|
-| **client** | nginx:alpine | Bootstrap 5 frontend, serves web UI on port 42019 |
+| **client** | nginx:alpine | Bootstrap 5 frontend, serves web UI on port 5000 |
 | **backend** | Custom (FastAPI) | Joke API with rating system |
 | **db** | postgres:16-alpine | PostgreSQL database for persistent storage |
-| **frontend** | Custom (Nginx) | Alternative frontend on port 8000 |
 
 ### Architecture
 
 ```
 ┌─────────────┐
-│   Browser   │  →  http://vm:42019
+│   Browser   │  →  http://10.93.25.232:5000
 └──────┬──────┘
        │
        ▼
 ┌──────────────────┐
-│   client (Nginx) │  :42019
+│   client (Nginx) │  :5000
 │  ┌────────────┐  │
 │  │ index.html │  │  Bootstrap 5 SPA
 │  └────────────┘  │
